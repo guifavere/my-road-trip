@@ -23,6 +23,25 @@ const IndexPage = () => {
    */
 
   async function mapEffect({ leafletElement } = {}) {
+    if (!leafletElement) return;
+
+    leafletElement.eachLayer((layer) => leafletElement.removeLayer(layer));
+
+    const tripPoints = createTripPointsGeoJson({ locations });
+    const tripLines = createTripLinesGeoJson({ locations });
+
+    const tripPointsGeoJsonLayers = new L.geoJson(tripPoints, {
+      pointToLayer: tripStopPointToLayer
+    });
+
+    const tripLinesGeoJsonLayers = new L.geoJSON(tripLines);
+
+    tripPointsGeoJsonLayers.addTo(leafletElement);
+    tripLinesGeoJsonLayers.addTo(leafletElement);
+
+    const bounds = tripPointsGeoJsonLayers.getBounds();
+
+    leafletElement.fitBounds(bounds);
   }
 
   const mapSettings = {
