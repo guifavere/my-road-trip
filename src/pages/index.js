@@ -1,10 +1,11 @@
 import React from 'react';
 import Helmet from 'react-helmet';
-import L from 'leaflet';
 
 import Layout from 'components/Layout';
 import Container from 'components/Container';
 import Map from 'components/Map';
+
+import { locations } from 'data/locations';
 
 const LOCATION = {
   lat: 38.9072,
